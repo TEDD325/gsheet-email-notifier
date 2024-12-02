@@ -45,6 +45,9 @@ def get_new_rows(old_data, new_data):
     return new_rows
 
 def format_new_rows(new_rows):
+    """
+    해당 부분은 구글 시트 상의 수정된 영역에 대한 구체적인 코드를 작성하는 영역으로서, 상황에 맞게 수정 필요
+    """
     formatted_rows = []
     for row in new_rows:
         # 공백이 아닌 값만 선택하여 포맷팅
