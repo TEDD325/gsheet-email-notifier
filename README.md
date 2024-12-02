@@ -28,6 +28,7 @@ export SHEET_ID=구글 시트의 ID
 export CREDENTIALS_FILE=[1. Google Cloud API setting 방법]에서 생성한 json 파일의 위치
 export EMAIL_CREDENTIALS_FILE=이메일 정보가 담긴 yaml 파일의 경로
 export RECEIVER_EMAIL=수신 받고자 하는 이메일 주소
+export GSHEET_NOTIFIER_SCRIPT_PATH=파이썬 스크립트 절대 경로
 ```
 
 ## 5. [Optional] `~/.zshrc`에 프로그램 자동 실행 스크립트 추가
@@ -36,11 +37,18 @@ sudo vi ~/.zshrc
 ```
 
 ```sh
-# gsheet-noti 환경 활성화 후 스크립트 자동 실행
-if [ -n "$PS1" ]; then
-    conda activate gsheet-noti 
-    python path/gsheet-notifier.py &
-fi
+# 구글 시트 알림 스크립트 실행 관리
+start_gsheet_notifier() {
+    # 스크립트가 이미 실행 중인지 확인
+    if pgrep -f "$SCRIPT_PATH" > /dev/null; then
+        echo "구글 시트 알림 프로세스가 이미 실행 중입니다."
+    else
+        echo "구글 시트 알림 프로세스를 시작합니다..."
+        conda activate gsheet-noti && nohup python "$SCRIPT_PATH" > /dev/null 2>&1 &
+    fi
+} 
+
+start_gsheet_notifier
 ```
 
 ```sh
